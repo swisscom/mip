@@ -1,9 +1,9 @@
 import random
-from collections import defaultdict
 import statistics
+from collections import defaultdict
 
-from datetime import datetime, timedelta, date
 import matplotlib.pyplot as plt
+from datetime import datetime, timedelta, date
 from oauthlib.oauth2 import BackendApplicationClient
 from requests_oauthlib import OAuth2Session
 
@@ -18,7 +18,7 @@ def build_api_query(date: date, tile_ids: list) -> str:
     return api_request
 
 def compute_density_baseline(tile_ids: list, 
-    start_date=date(year=2020, month=1, day=6), nb_days = 29) -> dict:
+    start_date=date(year=2020, month=1, day=6), nb_days:int = 29) -> dict:
     # The baseline is the median value, for the corresponding day of the week,
     # during the nb_days following start_date"
     day2densities = defaultdict(list)
@@ -46,10 +46,10 @@ def get_density_variation(date: date, tile_ids: list, weekday2density: dict) -> 
 def get_tile_ids_postal_code(postal_code: int) -> list:
     # Randomly sample MAX_NB_TILES_REQUEST tile ids
     # associated with the postal code of interest
-    muni_tiles_json = oauth.get(
+    tiles_json = oauth.get(
         BASE_URL + "/grids/postal-code-areas/{0}".format(postal_code), headers=headers).json()
     tile_ids = random.sample([t["tileId"]
-                              for t in muni_tiles_json["tiles"]], MAX_NB_TILES_REQUEST)
+                              for t in tiles_json["tiles"]], MAX_NB_TILES_REQUEST)
     return tile_ids
 
 
