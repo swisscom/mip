@@ -1,10 +1,11 @@
-from oauthlib.oauth2 import BackendApplicationClient
-from requests_oauthlib import OAuth2Session
-from datetime import datetime, timedelta, date
-import matplotlib.pylab as plt
 import random
 from collections import defaultdict
 import statistics
+
+from datetime import datetime, timedelta, date
+import matplotlib.pyplot as plt
+from oauthlib.oauth2 import BackendApplicationClient
+from requests_oauthlib import OAuth2Session
 
 
 def build_api_query(date: date, tile_ids: list) -> str:
@@ -16,10 +17,9 @@ def build_api_query(date: date, tile_ids: list) -> str:
     )
     return api_request
 
-
-# The baseline is the median value, for the corresponding day of the week,
-# during the  nb_days following start_date"
 def compute_density_baseline(tile_ids: list):
+    # The baseline is the median value, for the corresponding day of the week,
+    # during the nb_days following start_date"
     start_date = date(year=2020, month=1, day=6)
     nb_days = 29
     day2densities = defaultdict(lambda: [])
