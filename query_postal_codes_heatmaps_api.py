@@ -83,7 +83,7 @@ def plot_density_variation_tile_ids(tile_ids, start_date, nb_days):
 if __name__ == "__main__":
     # The following base url is associated with the standard plan
     # For the demo plan, you need replace the word `standard` 
-	# by `demo` in the URL
+    # by `demo` in the URL
     BASE_URL = "https://api.swisscom.com/layer/heatmaps/standard"
     TOKEN_URL = "https://consent.swisscom.com/o/oauth2/token"
     MAX_NB_TILES_REQUEST = 100
