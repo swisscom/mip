@@ -17,12 +17,11 @@ def build_api_query(date: date, tile_ids: list) -> str:
     )
     return api_request
 
-def compute_density_baseline(tile_ids: list):
+def compute_density_baseline(tile_ids: list, 
+    start_date=date(year=2020, month=1, day=6), nb_days = 29) -> dict:
     # The baseline is the median value, for the corresponding day of the week,
     # during the nb_days following start_date"
-    start_date = date(year=2020, month=1, day=6)
-    nb_days = 29
-    day2densities = defaultdict(lambda: [])
+    day2densities = defaultdict(list)
     for delta in range(nb_days):
         dt = start_date + timedelta(days=delta)
         day2densities[dt.weekday()].append(get_daily_density(dt, tile_ids))
@@ -54,7 +53,7 @@ def get_tile_ids_postal_code(postal_code: int) -> list:
     return tile_ids
 
 
-def get_density_variation_time_period(tile_ids, start_date, nb_days):
+def get_density_variation_time_period(tile_ids, start_date, nb_days) -> dict:
     weekday2density = compute_density_baseline(tile_ids)
     date2variation = dict()
     for delta in range(nb_days):
