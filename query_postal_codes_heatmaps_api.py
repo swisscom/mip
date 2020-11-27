@@ -92,7 +92,8 @@ if __name__ == "__main__":
     client_id = ""
     # customer secret in the Swisscom digital market place
     client_secret = ""
-
+    assert client_id, "client id not defined"
+    assert client_secret, "client_secret not defined"
     # Fetch an access token
     client = BackendApplicationClient(client_id=client_id)
     oauth = OAuth2Session(client=client)
