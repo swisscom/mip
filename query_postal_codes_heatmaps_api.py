@@ -8,17 +8,9 @@ from oauthlib.oauth2 import BackendApplicationClient
 from requests_oauthlib import OAuth2Session
 
 
-def build_api_query(date: date, tile_ids: list) -> str:
-    api_request = (
-        BASE_URL
-        + "/heatmaps/dwell-density/daily/{0}".format(date.isoformat())
-        + "?tiles="
-        + "&tiles=".join(map(str, tile_ids))
-    )
-    return api_request
-
-def compute_density_baseline(tile_ids: list, 
-    start_date=date(year=2020, month=1, day=6), nb_days:int = 29) -> dict:
+def compute_density_baseline(tile_ids: list,
+                             start_date=date(year=2020, month=1, day=6),
+                             nb_days: int = 29) -> dict:
     # The baseline is the median value, for the corresponding day of the week,
     # during the nb_days following start_date"
     day2densities = defaultdict(list)
@@ -31,8 +23,9 @@ def compute_density_baseline(tile_ids: list,
 
 
 def get_daily_density(date: date, tile_ids: list) -> float:
-    tiles_date = oauth.get(build_api_query(date, tile_ids),
-                           headers=headers).json()['tiles']
+    api_request = oauth.get(BASE_URL + "/heatmaps/dwell-density/daily/{0}".format(date.isoformat()),
+                            headers=headers, params={'tiles': tile_ids})
+    tiles_date = api_request.json()['tiles']
     return sum([t['score'] for t in tiles_date])
 
 
@@ -82,7 +75,7 @@ def plot_density_variation_tile_ids(tile_ids, start_date, nb_days):
 
 if __name__ == "__main__":
     # The following base url is associated with the standard plan
-    # For the demo plan, you need replace the word `standard` 
+    # For the demo plan, you need replace the word `standard`
     # by `demo` in the URL
     BASE_URL = "https://api.swisscom.com/layer/heatmaps/standard"
     TOKEN_URL = "https://consent.swisscom.com/o/oauth2/token"
@@ -92,6 +85,7 @@ if __name__ == "__main__":
     client_id = ""
     # customer secret in the Swisscom digital market place
     client_secret = ""
+
     assert client_id, "client id not defined"
     assert client_secret, "client_secret not defined"
     # Fetch an access token
@@ -101,4 +95,4 @@ if __name__ == "__main__":
                       client_secret=client_secret)
     postal_code = 1215
     plot_density_variation_tile_ids(get_tile_ids_postal_code(
-        postal_code), start_date=date(year=2020, month=2, day=1), nb_days=270)
+        postal_code), start_date=date(year=2020, month=2, day=1), nb_days=120)
