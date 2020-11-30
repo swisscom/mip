@@ -76,15 +76,15 @@ def plot_density_variation_tile_ids(tile_ids, start_date, nb_days):
 if __name__ == "__main__":
     # The following base url is associated with the standard plan
     # For the demo plan, you need replace the word `standard`
-    # by `demo` in the URL
+    # by `demo` in the URL. Note that the demo plan data is limited 
+    # to only 27/01/2020, which requires modifications to the code below.
+
     BASE_URL = "https://api.swisscom.com/layer/heatmaps/standard"
     TOKEN_URL = "https://consent.swisscom.com/o/oauth2/token"
     MAX_NB_TILES_REQUEST = 100
     headers = {"scs-version": "2"}  # API version
-    # customer key in the Swisscom digital market place
-    client_id = ""
-    # customer secret in the Swisscom digital market place
-    client_secret = ""
+    client_id = "" # customer key in the Swisscom digital market place
+    client_secret = "" # customer secret in the Swisscom digital market place
 
     assert client_id, "client id not defined"
     assert client_secret, "client_secret not defined"
