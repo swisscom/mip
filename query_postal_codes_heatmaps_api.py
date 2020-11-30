@@ -1,9 +1,9 @@
 import random
 import statistics
 from collections import defaultdict
+from datetime import datetime, timedelta, date
 
 import matplotlib.pyplot as plt
-from datetime import datetime, timedelta, date
 from oauthlib.oauth2 import BackendApplicationClient
 from requests_oauthlib import OAuth2Session
 
